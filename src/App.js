@@ -4,13 +4,11 @@ import "./assets/scss/index.scss";
 import Home from "./pages/home";
 import Assortment from "./pages/assortment";
 import ProductCart from "./pages/productCart";
-import Contacts from "./pages/contacts";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PriceList from "./pages/priceList";
 import SingleProduct from "./components/SingleProduct";
 import FailPage from "./pages/404";
-import { getAllItems } from "./features/product/productSlice";
 import { getTotals } from "./features/cart/cartSlice";
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -18,9 +16,6 @@ function App() {
   const dispatch = useDispatch()
   const {cartItems} = useSelector(store => store.cart)
   const {productItems} = useSelector(store => store.product)
-  useEffect(() => {
-    dispatch(getAllItems())
-  },[])
 
   useEffect(() => {
     dispatch(getTotals())

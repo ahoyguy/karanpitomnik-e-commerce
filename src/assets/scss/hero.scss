@@ -8,10 +8,10 @@
     grid-column-gap: 28px;
     text-align: center;
     &__contact {
-        grid-column: 4 span;
+        grid-column: 5 span;
     }
     &__gallery {
-        grid-column: 8 span;
+        grid-column: 7 span;
     }
     &__message {
         position: absolute;
@@ -44,6 +44,7 @@
     border-radius: 5px;
     text-align: center;
     font-family: var(--family-anonym);
+    box-shadow: -2px 8px 8px -2px var(--clr-grey-opacity);
     &__form {
         margin-bottom: 1rem;
     }
@@ -102,10 +103,15 @@
     width: 100%;
     background-color: var(--clr-yellow);
     border-radius: 5px;
+    box-shadow: -2px 8px 8px -2px var(--clr-grey-opacity);
     text-align: center;
     overflow: hidden;
     img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
         object-fit: cover;
         pointer-events: none;
     }

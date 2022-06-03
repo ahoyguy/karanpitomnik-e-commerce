@@ -167,4 +167,53 @@ body {
             background-color: rgba(171, 53, 187, 0.733);
         }
     }
+    &__label {
+        position: relative;
+    }
+    &__error {
+        position: absolute;
+        bottom: 0px;
+        left: 4px;
+        color: var(--clr-red);
+    }
+}
+.loading-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center; 
+    background-color: var(--clr-black-opacity);
+    overflow: hidden;
+    z-index: 1000;
+}
+.loading {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    background-color: var(--clr-red);
+    overflow: hidden;
+    animation: loading-animation 1s infinite linear;
+    div {
+        width: 0px;
+        height: 0px;
+        border-bottom: 0;
+        border-left: 100px solid transparent;
+        border-right: 100px solid transparent;
+        border-top: 100px solid var(--clr-yellow);
+        &:last-child {
+            transform: rotate(180deg);
+        }
+    }
+}
+
+@keyframes loading-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
 }

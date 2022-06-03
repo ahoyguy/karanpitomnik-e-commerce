@@ -3,17 +3,26 @@ import Icons from "../assets/images/icons.svg";
 import emailjs from "@emailjs/browser";
 import { useDispatch } from "react-redux";
 import { showMessage, hideMessage } from "../features/modals/modalSlice";
+import { useForm } from "react-hook-form";
 
 const ContactForm = ({ parentClass }) => {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+    mode: "onSubmit",
+  });
   const form = useRef();
 
   const sendEmail = (e) => {
-    e.preventDefault();
-
     emailjs
       .sendForm(
         "service_avoggr3",
@@ -24,11 +33,9 @@ const ContactForm = ({ parentClass }) => {
       .then(
         (result) => {
           console.log(result.text);
-          setName("");
-          setEmail("");
-          setMessage("");
           dispatch(showMessage());
           setTimeout(() => dispatch(hideMessage()), 4000);
+          reset();
         },
         (error) => {
           console.log(error.text);
@@ -38,33 +45,69 @@ const ContactForm = ({ parentClass }) => {
   return (
     <div className={`${parentClass}__contact contact-form`}>
       <h3 className="contact-form__title form-title">Задайте вопрос</h3>
-      <form className="contact-form__form form" onSubmit={sendEmail} ref={form}>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={name}
-          className="form__input"
-          placeholder="Ваше имя..."
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          name="email"
-          id="email"
-          value={email}
-          className="form__input"
-          placeholder="Ваша почта..."
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <textarea
-          name="message"
-          id="message"
-          value={message}
-          placeholder="Сообщение..."
-          className="form__input form__input--big"
-          onChange={(e) => setMessage(e.target.value)}
-        />
+      <form
+        className="contact-form__form form"
+        onSubmit={handleSubmit(sendEmail)}
+        ref={form}
+      >
+        <label className="form__label">
+          <input
+            type="text"
+            name="name"
+            id="name"
+            className="form__input"
+            placeholder="Ваше имя..."
+            {...register("name", {
+              required: "Введите своё имя!",
+              minLength: {
+                value: 3,
+                message: "Имя не должно содержать менее 3 букв!",
+              },
+            })}
+          />
+          <span className="form__error">
+            {errors?.name && (
+              <span>{errors?.name?.message || "Ошибка!"}</span>
+            )}
+          </span>
+        </label>
+        <label className="form__label">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            className="form__input"
+            placeholder="Ваша почта..."
+            {...register("email", {
+              required: "Введите свою почту!",
+              pattern: {
+                value: /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/gm,
+                message: "Введите почту правильно!"
+              }
+            })}
+          />
+          <span className="form__error">
+            {errors?.email && (
+              <span>{errors?.email?.message || "Ошибка!"}</span>
+            )}
+          </span>
+        </label>
+        <label className="form__label">
+          <textarea
+            name="message"
+            id="message"
+            placeholder="Сообщение..."
+            className="form__input form__input--big"
+            {...register("message", {
+              required: "Введите сообщение!",
+            })}
+          />
+          <span className="form__error">
+            {errors?.message && (
+              <span>{errors?.message?.message || "Ошибка!"}</span>
+            )}
+          </span>
+        </label>
         <button className="form__btn" type="submit" value="send">
           отправить
         </button>

@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 // import "swiper/css/autoplay";
 
 const GallerySwiper = ({ parentClass }) => {
-  const { productItems } = useSelector((store) => store.product);
+  const { productItems:{products} } = useSelector((store) => store.product);
   return (
     <div className={`${parentClass}__gallery hero-gallery`}>
       <Swiper
@@ -25,11 +25,11 @@ const GallerySwiper = ({ parentClass }) => {
         // autoplay     
       >
         <h2 className="hero-gallery__title">Галлерея растений</h2>
-        {productItems.map((item) => {
-          const { url, title } = item.attributes.image.data.attributes;
+        {products.map((item) => {
+          const { id, image, title } = item;
           return (
-            <SwiperSlide key={item.id}>
-              <img src={`http://localhost:1337${url}`} alt={title} />
+            <SwiperSlide key={id}>
+              <img src={image} alt={title} />
             </SwiperSlide>
           );
         })}

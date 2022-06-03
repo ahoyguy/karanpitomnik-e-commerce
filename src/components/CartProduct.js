@@ -4,12 +4,12 @@ import Icons from '../assets/images/icons.svg'
 import { toggleAmount, removeItem } from "../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 
-const CartProduct = ({ id, title, subtitle, price, cartImg, amount }) => {
+const CartProduct = ({ id, title, subtitle, price, image, amount }) => {
   const dispatch = useDispatch();
   return (
     <article className="cart-product">
       <div className="cart-product__image">
-        <img src={`http://localhost:1337${cartImg}`} alt={title} />
+        <img src={image} alt={title} />
       </div>
       <div className="cart-product__title">
         <h4>{title}</h4>

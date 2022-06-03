@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Favorite from "./Favorite";
-import Tooltip from "./Tooltip";
 import Icons from "../assets/images/icons.svg";
 import { curFormat } from "../utils/curencyFormat";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +8,6 @@ import { addToCart } from "../features/cart/cartSlice";
 
 const CartItem = ({ id, title, subtitle, price, image, amount }) => {
   const dispatch = useDispatch();
-  const cartImg = image.data.attributes.url;
   const slug = subtitle.replace(/\s/g, "-").replace(/("|')/g, "").toLowerCase();
   const cartItem = useSelector((store) =>
     store.cart.cartItems.find((item) => item.id === id)
@@ -22,7 +20,7 @@ const CartItem = ({ id, title, subtitle, price, image, amount }) => {
     <article className="cart-item">
       <div className="cart-item__image">
         <img
-          src={`http://localhost:1337${cartImg}`}
+          src={image}
           alt={title}
         />
         <Favorite parentClass="cart-item" id={id} title={title} slug={slug} />
@@ -51,7 +49,7 @@ const CartItem = ({ id, title, subtitle, price, image, amount }) => {
                   title,
                   subtitle,
                   price,
-                  cartImg,
+                  image,
                   amount,
                   inCart: true,
                 })

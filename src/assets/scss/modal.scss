@@ -35,7 +35,10 @@
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-bottom: 2rem;
-    } 
+    }
+    &__link {
+        font-size: 1.1rem;
+    }
 }
 .btn-container {
     display: flex;
